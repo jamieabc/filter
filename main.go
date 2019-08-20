@@ -1,12 +1,10 @@
 package main
 
 import (
-	//"bufio"
 	"fmt"
 	"io"
 	"os"
 
-	// "syscall"
 	"time"
 )
 
@@ -31,11 +29,9 @@ func main() {
 	for {
 		select {
 		case <-timer:
-			for {
-				_, err := io.Copy(os.Stdout, os.Stdin)
-				if nil != err {
-					panic(err)
-				}
+			_, err := io.Copy(os.Stdout, os.Stdin)
+			if nil != err {
+				panic(err)
 			}
 			timer = time.After(checkTimeSecond)
 		}
