@@ -1,6 +1,7 @@
 package main
 
 import (
+	"filter/arguments"
 	"fmt"
 	"io"
 	"os"
@@ -14,6 +15,12 @@ const (
 )
 
 func main() {
+	keyword := arguments.Parse()
+	if "" == keyword {
+		printHelp()
+		return
+	}
+
 	info, err := os.Stdin.Stat()
 	if nil != err {
 		panic(err)
@@ -36,6 +43,11 @@ func main() {
 			timer = time.After(checkTimeSecond)
 		}
 	}
+}
+
+func printHelp() {
+	fmt.Printf("Usage: filter -keyword=[search word]\n")
+	fmt.Println("Please input search keyword")
 }
 
 func isCharDevice(mode os.FileMode) bool {
