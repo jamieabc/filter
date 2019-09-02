@@ -31,16 +31,16 @@ func main() {
 		return
 	}
 
-	timer := time.After(initialCheckTimeSecond)
+	timer := time.NewTimer(initialCheckTimeSecond)
 
 	for {
 		select {
-		case <-timer:
+		case <-timer.C:
 			_, err := io.Copy(os.Stdout, os.Stdin)
 			if nil != err {
 				panic(err)
 			}
-			timer = time.After(checkTimeSecond)
+			timer.Reset(checkTimeSecond)
 		}
 	}
 }
